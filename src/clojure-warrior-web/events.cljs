@@ -19,6 +19,8 @@
        (str '(set! *print-err-fn*
                    (fn [& args]
                      (r/dispatch [:console-error args]))))
+       (str '(defn enter-the-tower! [user-code]
+               (user-code {})))
        code
        (str '(enable-console-print!))]
       (fn [{:keys [error value] :as x}]
@@ -28,9 +30,12 @@
             (js/console.error (str error))))))))
 
 (def sample-code
-  (->> ['(print "hello")]
+  (->> ['(defn warrior-code [state]
+           (print "I am Clonan, the Reasonable!")
+           [:walk :forward])
+        '(enter-the-tower! warrior-code)]
        (map #(with-out-str (fipp/pprint %1 {:width 40})))
-       (string/join "")))
+       (string/join "\n")))
 
 (reg-event-fx
   :initialize
