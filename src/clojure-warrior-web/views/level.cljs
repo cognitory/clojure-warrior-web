@@ -52,6 +52,7 @@
 (defn level-view []
   [:div.level
    (for [entity board]
+     ^{:key (gensym)}
      [:div.space
       [entity-view entity]
       [health-bar-view entity]])])
