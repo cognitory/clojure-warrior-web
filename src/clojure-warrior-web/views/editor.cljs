@@ -37,6 +37,7 @@
                                         :value @code}))
            (.on "change" (fn [editor]
                            (dispatch [:update-code (.getValue editor)])))))
+
        :reagent-render
        (fn []
          [:div.editor {:on-key-down (fn [e]

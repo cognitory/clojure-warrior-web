@@ -11,3 +11,20 @@
   :log
   (fn [state]
     (state :log)))
+
+(reg-sub
+  :history
+  (fn [state]
+    (get-in state [:history])))
+
+(reg-sub
+  :turn-count
+  (fn [state]
+    (count (state :history))))
+
+(reg-sub
+  :turn
+  (fn [state]
+    (state :turn)))
+
+

@@ -4,7 +4,8 @@
     [clojure.string :as string]
     [fipp.clojure :as fipp]
     [clojure-warrior-web.eval :refer [eval-code]]
-    [clojure-warrior-web.url-store :as url-store]))
+    [clojure-warrior-web.url-store :as url-store]
+    [clojure-warrior-web.seed :refer [history]]))
 
 (reg-fx
   :eval
@@ -42,7 +43,9 @@
   (fn [_ _]
     (let [code (or (url-store/fetch) sample-code)]
       {:db {:log []
-            :code code}
+            :code code
+            :turn 0
+            :history history}
        :dispatch [:store-in-url code]})))
 
 (reg-event-fx
@@ -60,7 +63,8 @@
 (reg-event-fx
   :store-in-url
   (fn [_ [_ code]]
-    (url-store/save! code)))
+    (url-store/save! code)
+    {}))
 
 (reg-event-db
   :console-log
@@ -71,3 +75,9 @@
   :console-error
   (fn [state [_ error]]
     (update state :log conj {:error error})))
+
+(reg-event-db
+  :set-turn
+  (fn [state [_ turn]]
+    (assoc state :turn turn)))
+

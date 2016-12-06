@@ -1,31 +1,6 @@
-(ns clojure-warrior-web.views.level)
-
-(def board
-  [{:type :warrior
-    :state (rand-nth [:base :rest :attack :walk :shoot :dead])
-    :max-health 20
-    :health (rand-int 20)}
-   {:type :sludge
-    :state (rand-nth [:base :attack :dead])
-    :max-health 12
-    :health (rand-int 12)}
-   {:type :thick-sludge
-    :state (rand-nth [:base :attack :dead])
-    :max-health 24
-    :health (rand-int 24)}
-   {:type :archer
-    :state (rand-nth [:base :attack :dead])
-    :max-health 7
-    :health (rand-int 7)}
-   {:type :wizard
-    :state (rand-nth [:base :shoot :dead])
-    :max-health 3
-    :health (rand-int 3)}
-   {:type :stairs}
-   {:type :captive
-    :state (rand-nth [:base :free :dead])
-    :max-health 1
-    :health (rand-int 2)}])
+(ns clojure-warrior-web.views.level
+  (:require
+    [re-frame.core :refer [subscribe dispatch]]))
 
 (defn health-bar-view [entity]
   (when (entity :max-health)
@@ -47,12 +22,37 @@
                  (name (:type entity))
                  (when (:state entity)
                    (str "_" (name (:state entity))))
-                 ".png)")}}])
+                 ".png)")}}
+   [health-bar-view entity]])
+
+(defn navigator-view []
+  (let [turn (subscribe [:turn])
+        turn-count (subscribe [:turn-count])]
+    (fn []
+      [:div.navigator
+       [:button {:disabled (when (= @turn 0) "disabled")
+                 :on-click (fn []
+                             (dispatch [:set-turn (dec @turn)]))} "<"]
+       [:input {:type "range"
+                :min 0
+                :max (dec @turn-count)
+                :step 1
+                :value @turn
+                :on-change (fn [e]
+                             (dispatch [:set-turn (js/parseInt (.. e -target -value) 10)]))}]
+       [:button {:disabled (when (= @turn (dec @turn-count)) "disabled")
+                 :on-click (fn []
+                             (dispatch [:set-turn (inc @turn)]))} ">"]])))
 
 (defn level-view []
-  [:div.level
-   (for [entity board]
-     ^{:key (gensym)}
-     [:div.space
-      [entity-view entity]
-      [health-bar-view entity]])])
+  (let [history (subscribe [:history])
+        turn (subscribe [:turn])]
+    (fn []
+      [:div
+       [navigator-view]
+       [:div.level
+        (for [entity (-> (get @history @turn)
+                         :board)]
+          ^{:key (gensym)}
+          [:div.space
+           [entity-view entity]])]])))

@@ -62,18 +62,41 @@
     {:display "inline-block"
      :width "64px"
      :height "64px"
-     :background-image "url(./sprites/floor.png)"}
+     :background-image "url(./sprites/floor.png)"
+     :position "relative"}
 
     [:.sprite
      {:width "64px"
       :height "64px"
       :background-repeat "no-repeat"
-      :background-position-x "center"}]
+      :background-position-x "center"
+      :position "absolute"
+      :z-index 100}
+
+     [:&.floor
+      {:display "none"}]
+
+     [:&.walk.warrior
+      {:left "32px"}]
+
+     [:&.attack.sludge
+      {:left "0px"}]
+
+     [:&.attack.warrior::after
+      {:content "\"\""
+       :display "block"
+       :width "64px"
+       :height "64px"
+       :background "url(./sprites/warrior_attack-receive.png)"
+       :position "absolute"
+       :top 0
+       :left "64px"
+       :z-index 102}]]
 
     [:.health-bar
      {:height "2px"
       :background "#e5e6c7"
-      :margin "-60px auto 0"}
+      :margin "4px auto 0"}
 
      [:.health
       {:height "100%"}
