@@ -102,7 +102,21 @@
         :position "absolute"
         :top 0
         :left "64px"
-        :z-index 102}]]
+        :z-index 102}]
+
+      [:&.warrior.walk-stairs
+       {:background-image "url(./sprites/stairs.png) !important"}]
+
+      [:&.warrior.walk-stairs::after
+       {:content "\"\""
+        :display "block"
+        :width "64px"
+        :height "64px"
+        :background "url(./sprites/warrior_walk-stairs.png)"
+        :position "absolute"
+        :top 0
+        :left 0
+        :z-index 100}]]
 
      [:.health-bar
       {:height "2px"
