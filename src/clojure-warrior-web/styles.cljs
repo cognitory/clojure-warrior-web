@@ -70,7 +70,7 @@
       {:font-weight "bold"}]]]
 
    [:.board
-    {:height "64px"}
+    {:flex-basis "64px"}
 
     [:.space
      {:display "inline-block"
