@@ -5,7 +5,8 @@
     [fipp.clojure :as fipp]
     [clojure-warrior-web.eval :refer [eval-code]]
     [clojure-warrior-web.url-store :as url-store]
-    [clojure-warrior-web.seed :as seed]))
+    [clojure-warrior-web.seed :as seed]
+    [clojure-warrior.core :as cljw]))
 
 (reg-fx
   :eval
@@ -31,7 +32,11 @@
                (def distance-to cljw/distance-to)
                (def inspect cljw/inspect)))
        (str '(defn enter-the-tower! [user-code]
-               (r/dispatch [:set-history (cljw/enter-the-tower! user-code)])))
+               (let [levels [{:id 1
+                              :board [[:*> :<a :__]]}
+                             {:id 2
+                              :board [[:*> :__]]}]]
+                 (r/dispatch [:set-history (cljw/play-levels! levels user-code)]))))
        code
        (str '(enable-console-print!))]
       (fn [{:keys [error value] :as x}]
