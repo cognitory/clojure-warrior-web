@@ -16,11 +16,27 @@
 (defn annotate-entity [entity]
   (case (:type entity)
     :warrior
-    (if (= 0 (:health entity))
+    (cond
+      (= 0 (:health entity))
       (assoc entity :state :dead)
+
+      (= :walk (first (:action entity)))
+      (assoc entity :state :walk)
+
+      (= :attack (first (:action entity)))
+      (assoc entity :state :attack)
+
+      :else
       (assoc entity :state :base))
+
     :archer
-    (assoc entity :state :base)
+    (cond
+      (= 0 (:health entity))
+      (assoc entity :state :dead)
+
+      :else
+      (assoc entity :state :base))
+
     entity))
 
 (defn entity-view [entity]
