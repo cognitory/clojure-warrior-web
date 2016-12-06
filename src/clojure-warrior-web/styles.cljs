@@ -65,7 +65,9 @@
    [:.messages
     {:overflow "scroll"}
 
-    [:.message]]
+    [:.message
+     [:&:last-child
+      {:font-weight "bold"}]]]
 
    [:.board
 
