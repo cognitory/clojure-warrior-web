@@ -105,7 +105,7 @@
        {:background "#11ec11"}]
 
       [:&.medium
-       {:background "#e9ec11"}]
+       {:background "#ec8f11"}]
 
       [:&.low
        {:background "#ec1111"}]]]]])
