@@ -20,7 +20,9 @@
     :style {:background-image
             (str "url(./sprites/"
                  (name (:type entity))
-                 (when (:state entity)
+                 (when (= :warrior (:type entity))
+                   "_base")
+                 #_(when (:state entity)
                    (str "_" (name (:state entity))))
                  ".png)")}}
    [health-bar-view entity]])
@@ -44,15 +46,26 @@
                  :on-click (fn []
                              (dispatch [:set-turn (inc @turn)]))} ">"]])))
 
+(defn messages-view [messages]
+  [:div.messages
+   (for [message messages]
+     [:div.message message])])
+
+(defn board-view [board]
+  [:div.board
+   (for [row board]
+     [:div.row
+      (for [entity row]
+        ^{:key (gensym)}
+        [:div.space
+         [entity-view entity]])])])
+
 (defn level-view []
   (let [history (subscribe [:history])
         turn (subscribe [:turn])]
     (fn []
-      [:div
+      [:div.level
        [navigator-view]
-       [:div.level
-        (for [entity (-> (get @history @turn)
-                         :board)]
-          ^{:key (gensym)}
-          [:div.space
-           [entity-view entity]])]])))
+       [board-view (get-in @history [@turn :board])]
+       [messages-view (get-in @history [@turn :messages])]])))
+

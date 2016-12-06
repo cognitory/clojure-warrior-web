@@ -5,7 +5,7 @@
     [fipp.clojure :as fipp]
     [clojure-warrior-web.eval :refer [eval-code]]
     [clojure-warrior-web.url-store :as url-store]
-    [clojure-warrior-web.seed :refer [history]]))
+    [clojure-warrior-web.seed :as seed]))
 
 (reg-fx
   :eval
@@ -13,15 +13,25 @@
     (eval-code
       [(str '(ns clojure-warrior-web.user
                (:require
-                 [re-frame.core :as r])))
+                 [re-frame.core :as r]
+                 [clojure-warrior.core :as cljw])))
        (str '(set! *print-fn*
                    (fn [& args]
                      (r/dispatch [:console-log args]))))
        (str '(set! *print-err-fn*
                    (fn [& args]
                      (r/dispatch [:console-error args]))))
+       ; manually aliasing because :refer is not working with eval-str
+       (str '(do
+               (def look cljw/look)
+               (def feel cljw/feel)
+               (def listen cljw/listen)
+               (def stairs cljw/stairs)
+               (def warrior cljw/warrior)
+               (def distance-to cljw/distance-to)
+               (def inspect cljw/inspect)))
        (str '(defn enter-the-tower! [user-code]
-               (user-code {})))
+               (r/dispatch [:set-history (cljw/enter-the-tower! user-code)])))
        code
        (str '(enable-console-print!))]
       (fn [{:keys [error value] :as x}]
@@ -45,8 +55,15 @@
       {:db {:log []
             :code code
             :turn 0
-            :history history}
+            :history seed/history}
        :dispatch [:store-in-url code]})))
+
+(reg-event-fx
+  :set-history
+  (fn [{state :db} [_ history]]
+    {:db (assoc state
+           :history history
+           :turn 0)}))
 
 (reg-event-fx
   :update-code
