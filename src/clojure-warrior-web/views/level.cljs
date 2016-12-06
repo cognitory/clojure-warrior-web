@@ -72,7 +72,9 @@
   (into [:div.board]
         (for [row board]
           (into [:div.row]
-                (for [entity row]
+                (for [entity (-> row
+                                 ; remove walls at leftmost and rightmost
+                                 rest butlast)]
                   [:div.space
                    [entity-view entity]])))))
 
