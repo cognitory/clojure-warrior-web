@@ -10,6 +10,7 @@
 (defn editor-styles []
   [:.editor
    {:width "40%"
+    :min-width "20em"
     :flex-grow 1
     :overflow "hidden"
     :position "relative"}
@@ -56,59 +57,69 @@
 
 (defn level-styles []
   [:.level
-   {}
+   {:display "flex"
+    :flex-direction "column"
+    :min-width "20em"
+    :height "100vh"}
 
-   [:.space
-    {:display "inline-block"
-     :width "64px"
-     :height "64px"
-     :background-image "url(./sprites/floor.png)"
-     :position "relative"}
+   [:.messages
+    {:overflow "scroll"}
 
-    [:.sprite
-     {:width "64px"
+    [:.message]]
+
+   [:.board
+
+    [:.space
+     {:display "inline-block"
+      :width "64px"
       :height "64px"
-      :background-repeat "no-repeat"
-      :background-position-x "center"
-      :position "absolute"
-      :z-index 100}
+      :background-image "url(./sprites/floor.png)"
+      :position "relative"}
 
-     [:&.floor
-      {:display "none"}]
-
-     [:&.walk.warrior
-      {:left "32px"}]
-
-     [:&.attack.sludge
-      {:left "0px"}]
-
-     [:&.attack.warrior::after
-      {:content "\"\""
-       :display "block"
-       :width "64px"
+     [:.sprite
+      {:width "64px"
        :height "64px"
-       :background "url(./sprites/warrior_attack-receive.png)"
+       :background-repeat "no-repeat"
+       :background-position-x "center"
        :position "absolute"
-       :top 0
-       :left "64px"
-       :z-index 102}]]
+       :z-index 100}
 
-    [:.health-bar
-     {:height "2px"
-      :background "#e5e6c7"
-      :margin "4px auto 0"}
+      [:&.floor
+       {:display "none"}]
 
-     [:.health
-      {:height "100%"}
+      [:&.walk.warrior
+       {:left "32px"}]
 
-      [:&.high
-       {:background "#11ec11"}]
+      [:&.attack.sludge
+       {:left "0px"}]
 
-      [:&.medium
-       {:background "#ec8f11"}]
+      [:&.attack.warrior::after
+       {:content "\"\""
+        :display "block"
+        :width "64px"
+        :height "64px"
+        :background "url(./sprites/warrior_attack-receive.png)"
+        :position "absolute"
+        :top 0
+        :left "64px"
+        :z-index 102}]]
 
-      [:&.low
-       {:background "#ec1111"}]]]]])
+     [:.health-bar
+      {:height "2px"
+       :background "#e5e6c7"
+       :margin "4px auto 0"}
+
+      [:.health
+       {:height "100%"}
+
+       [:&.high
+        {:background "#11ec11"}]
+
+       [:&.medium
+        {:background "#ec8f11"}]
+
+       [:&.low
+        {:background "#ec1111"}]]]]]])
 
 (defn main-styles []
   [:body
