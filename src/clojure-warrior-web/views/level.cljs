@@ -13,19 +13,28 @@
                 (< (entity :health) 10) "medium"
                 :else "high")}]]))
 
+(defn annotate-entity [entity]
+  (case (:type entity)
+    :warrior
+    (if (= 0 (:health entity))
+      (assoc entity :state :dead)
+      (assoc entity :state :base))
+    :archer
+    (assoc entity :state :base)
+    entity))
+
 (defn entity-view [entity]
-  [:div.sprite
-   {:class (str (name (:type entity)) " "
-                (name (or (:state entity) :nil)))
-    :style {:background-image
-            (str "url(./sprites/"
-                 (name (:type entity))
-                 (when (= :warrior (:type entity))
-                   "_base")
-                 #_(when (:state entity)
-                   (str "_" (name (:state entity))))
-                 ".png)")}}
-   [health-bar-view entity]])
+  (let [entity (annotate-entity entity)]
+    [:div.sprite
+     {:class (str (name (:type entity)) " "
+                  (name (or (:state entity) :nil)))
+      :style {:background-image
+              (str "url(./sprites/"
+                   (name (:type entity))
+                   (when (:state entity)
+                       (str "_" (name (:state entity))))
+                   ".png)")}}
+     [health-bar-view entity]]))
 
 (defn navigator-view []
   (let [turn (subscribe [:turn])
