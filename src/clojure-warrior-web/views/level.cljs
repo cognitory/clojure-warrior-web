@@ -14,29 +14,21 @@
                 :else "high")}]]))
 
 (defn annotate-entity [entity]
-  (case (:type entity)
-    :warrior
-    (cond
-      (= 0 (:health entity))
-      (assoc entity :state :dead)
+  (cond
+    (= 0 (:health entity))
+    (assoc entity :state :dead)
 
-      (= :walk (first (:action entity)))
-      (assoc entity :state :walk)
+    (:at-stairs entity)
+    (assoc entity :state :walk-stairs)
 
-      (= :attack (first (:action entity)))
-      (assoc entity :state :attack)
+    (contains? #{:walk :attack :shoot :rest} (first (:action entity)))
+    (assoc entity :state (first (:action entity)))
 
-      :else
-      (assoc entity :state :base))
+    (contains? #{:warrior :sludge :thick-sludge :archer :wizard}
+               (:type entity))
+    (assoc entity :state :base)
 
-    :archer
-    (cond
-      (= 0 (:health entity))
-      (assoc entity :state :dead)
-
-      :else
-      (assoc entity :state :base))
-
+    :else
     entity))
 
 (defn entity-view [entity]
