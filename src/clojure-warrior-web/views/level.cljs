@@ -47,18 +47,17 @@
                              (dispatch [:set-turn (inc @turn)]))} ">"]])))
 
 (defn messages-view [messages]
-  [:div.messages
-   (for [message messages]
-     [:div.message message])])
+  (into [:div.messages]
+        (for [message messages]
+          [:div.message message])))
 
 (defn board-view [board]
-  [:div.board
-   (for [row board]
-     [:div.row
-      (for [entity row]
-        ^{:key (gensym)}
-        [:div.space
-         [entity-view entity]])])])
+  (into [:div.board]
+        (for [row board]
+          (into [:div.row]
+                (for [entity row]
+                  [:div.space
+                   [entity-view entity]])))))
 
 (defn level-view []
   (let [history (subscribe [:history])
