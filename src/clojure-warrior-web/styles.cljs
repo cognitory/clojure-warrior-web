@@ -90,9 +90,6 @@
       [:&.floor
        {:display "none"}]
 
-      [:&.walk.warrior
-       {:left "32px"}]
-
       [:&.attack.sludge
        {:left "0px"}]
 
