@@ -69,22 +69,30 @@
      {:flex-basis "100%"}]]
 
    [:.messages
-    {:overflow "scroll"}
+    {:overflow "scroll"
+     :font-family "monospace"
+     :flex-basis "50%"
+     :flex-grow 2}
 
     [:.message
+     {:white-space "nowrap"
+      :line-height "1.25em"
+      :padding "0 0.5em"}
+
      [:&:last-child
       {:font-weight "bold"}]]]
 
    [:.board
     {:height "64px"
      :width "100%"
-     :background-image "url(./sprites/floor.png)"}
+     :overflow "hidden"
+     :white-space "nowrap"}
 
     [:.space
      {:display "inline-block"
       :width "64px"
       :height "64px"
-      ;:background-image "url(./sprites/floor.png)"
+      :background-image "url(./sprites/floor.png)"
       :position "relative"}
 
      [:.sprite
