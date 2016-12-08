@@ -18,10 +18,13 @@
       (into [:div.console]
             (for [log @logs]
               (cond
-                (log :error) [:div.error.message
-                              (.. (log :error) -cause -message)]
-                (log :log) [:div.log.message
-                            (log :log)]))))))
+                (log :error)
+                [:div.error.message
+                 (.. (log :error) -cause -message)]
+
+                (log :log)
+                [:div.log.message
+                 (log :log)]))))))
 
 (defn editor-view []
   (let [code (subscribe [:code])]
