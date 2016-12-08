@@ -9,8 +9,7 @@
 
 (defn editor-styles []
   [:.editor
-   {:width "40%"
-    :min-width "20em"
+   {:min-width "20em"
     :flex-grow 1
     :overflow "hidden"
     :position "relative"}
@@ -49,8 +48,7 @@
 
 (defn sidebar-styles []
   [:.sidebar
-   {:width "20%"
-    :overflow "hidden"}
+   {:overflow "hidden"}
 
    [:.CodeMirror
     (code-area)]])
@@ -59,8 +57,15 @@
   [:.level
    {:display "flex"
     :flex-direction "column"
-    :min-width "20em"
-    :height "100vh"}
+    :height "100vh"
+    :overflow "hidden"}
+
+   [:.navigator
+    {:display "flex"
+     :min-height "2em"}
+
+    [:input
+     {:flex-basis "100%"}]]
 
    [:.messages
     {:overflow "scroll"}
@@ -70,7 +75,8 @@
       {:font-weight "bold"}]]]
 
    [:.board
-    {:flex-basis "64px"}
+    {:height "64px"
+     :width "576px"}
 
     [:.space
      {:display "inline-block"
