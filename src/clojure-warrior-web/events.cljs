@@ -5,7 +5,6 @@
     [fipp.clojure :as fipp]
     [clojure-warrior-web.eval :refer [eval-code]]
     [clojure-warrior-web.url-store :as url-store]
-    [clojure-warrior-web.seed :as seed]
     [clojure-warrior.levels :as levels]
     [clojure-warrior.core :as cljw]))
 
@@ -58,7 +57,7 @@
       {:db {:log []
             :code code
             :turn 0
-            :history seed/history}
+            :history []}
        :dispatch [:store-in-url code]})))
 
 (reg-event-fx

@@ -82,8 +82,10 @@
   (let [history (subscribe [:history])
         turn (subscribe [:turn])]
     (fn []
-      [:div.level
-       [navigator-view]
-       [board-view (get-in @history [@turn :board])]
-       [messages-view (get-in @history [@turn :messages])]])))
+      (if (seq @history)
+        [:div.level
+         [navigator-view]
+         [board-view (get-in @history [@turn :board])]
+         [messages-view (get-in @history [@turn :messages])]]
+        [:div.level]))))
 
