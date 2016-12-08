@@ -1,5 +1,6 @@
 (ns clojure-warrior-web.views.level
   (:require
+    [reagent.core :as r]
     [re-frame.core :refer [subscribe dispatch]]))
 
 (defn health-bar-view [entity]
@@ -64,9 +65,21 @@
                              (dispatch [:set-turn (inc @turn)]))} ">"]])))
 
 (defn messages-view [messages]
-  (into [:div.messages]
-        (for [message messages]
-          [:div.message message])))
+  (r/create-class
+    {:component-did-update
+     (fn [this]
+       (let [dom-node (r/dom-node this)]
+         ; scroll to bottom:
+         (set! (.-scrollTop dom-node)
+               (.-scrollHeight dom-node))))
+     :reagent-render
+     (fn [messages]
+       [:div.messages
+        (map-indexed
+          (fn [i message]
+            ^{:key i}
+            [:div.message message])
+          messages)])}))
 
 (defn board-view [board]
   (into [:div.board]
