@@ -58,6 +58,7 @@
    {:display "flex"
     :flex-direction "column"
     :height "100vh"
+    :width (str (* 9 64) "px")
     :overflow "hidden"}
 
    [:.navigator
@@ -76,13 +77,14 @@
 
    [:.board
     {:height "64px"
-     :width "576px"}
+     :width "100%"
+     :background-image "url(./sprites/floor.png)"}
 
     [:.space
      {:display "inline-block"
       :width "64px"
       :height "64px"
-      :background-image "url(./sprites/floor.png)"
+      ;:background-image "url(./sprites/floor.png)"
       :position "relative"}
 
      [:.sprite
