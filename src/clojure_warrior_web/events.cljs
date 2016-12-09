@@ -29,6 +29,7 @@
                (def feel cljw/feel)
                (def listen cljw/listen)
                (def stairs cljw/stairs)
+               (def say cljw/say)
                (def warrior cljw/warrior)
                (def distance-to cljw/distance-to)
                (def inspect cljw/inspect)))
