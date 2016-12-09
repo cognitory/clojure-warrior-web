@@ -45,7 +45,7 @@
 
 (def sample-code
   (->> ['(defn warrior-code [state]
-           (print "I am Clonan, the Reasonable!")
+           (say (:health (warrior state)))
            [:walk :forward])
         '(enter-the-tower! warrior-code)]
        (map #(with-out-str (fipp/pprint %1 {:width 40})))
