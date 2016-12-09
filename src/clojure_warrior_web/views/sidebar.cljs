@@ -3,7 +3,17 @@
     [reagent.core :as r]))
 
 (def commands
-  [(symbol "; helper functions")
+  [(symbol "; warrior commands")
+   ""
+   '[:walk :forward]     ; Move in given direction
+   '[:attack :forward]   ; Attack the unit in given direction
+   '[:rest]              ; Gain 10% of max health back, but do nothing more
+   '[:rescue :forward]   ; Rescue a captive from his chains (earning 50 points) in given direction
+   '[:pivot]             ; Turn around
+   '[:shoot :forward]    ; Shoot your bow & arrow in a given direction
+   ""
+
+   (symbol "; helper functions")
    ""
    ; return the warrior
    '(warrior state)
@@ -26,19 +36,22 @@
    ; returns numbers of steps from the warriror to a position
    '(distance-to state [4 0])
    ""
-   (symbol "; warrior commands")
-   ""
-   '[:walk :forward]     ; Move in given direction
-   '[:attack :forward]   ; Attack the unit in given direction
-   '[:rest]              ; Gain 10% of max health back, but do nothing more
-   '[:rescue :forward]   ; Rescue a captive from his chains (earning 50 points) in given direction
-   '[:pivot]             ; Turn around
-   '[:shoot :forward]    ; Shoot your bow & arrow in a given direction
-   ""
+
    (symbol "; clojure functions")
    ""
-   '(print ...)
-   '(defn name [args] ...)])
+   '(defn name [args] ...)
+   '(get map :key)
+   '(get-in map [:foo :bar])
+   '(if condition
+      true-result
+      false-result)
+   '(cond
+      condition-1
+      result-1
+      condition-2
+      result-2
+      ...)
+   ])
 
 (defn sidebar-view []
   (r/create-class
