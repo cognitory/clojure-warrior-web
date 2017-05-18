@@ -75,9 +75,22 @@
      :flex-grow 2}
 
     [:.message
-     {:white-space "nowrap"
-      :line-height "1.25em"
+     {:line-height "1.25em"
       :padding "0 0.5em"}
+
+     [:&.system
+      {:white-space "nowrap"}]
+
+     [:&.say
+      {:padding "0.75em 1em"
+       :border-radius "3px"
+       :margin "0.5em 0.5em"
+       :display "inline-block"
+       :background "#2b2b2b"}
+
+      [:>.CodeMirror
+       {:white-space "pre"
+        :height "inherit"}]]
 
      [:&:last-child
       {:font-weight "bold"}]]]

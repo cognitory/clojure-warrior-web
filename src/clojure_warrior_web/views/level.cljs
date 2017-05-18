@@ -1,5 +1,7 @@
 (ns clojure-warrior-web.views.level
   (:require
+    [clojure.string :as string]
+    [zprint.core :refer [zprint-str]]
     [reagent.core :as r]
     [re-frame.core :refer [subscribe dispatch]]))
 
@@ -64,6 +66,26 @@
                  :on-click (fn []
                              (dispatch [:set-turn (inc @turn)]))} ">"]])))
 
+(defn code-view [code]
+  [:div {:class (string/join " "  ["CodeMirror" "cm-s-default" "cm-s-railscasts"])
+         :ref (fn [el]
+                (when (not (nil? el))
+                  (js/CodeMirror.runMode
+                    (zprint-str code 25 {:style :community
+                                         :parse-string? true
+                                         :map {:comma? false
+                                               :force-nl? true}})
+                    "clojure"
+                    el)))}])
+
+(defn message-view [message]
+  (if (string/starts-with? message ">")
+    [:div.message.say
+     (let [out (string/replace-first message "> " "")]
+       [code-view out])]
+    [:div.message.system
+     message]))
+
 (defn messages-view [messages]
   (r/create-class
     {:component-did-update
@@ -78,7 +100,7 @@
         (map-indexed
           (fn [i message]
             ^{:key i}
-            [:div.message message])
+            [message-view message])
           messages)])}))
 
 (defn board-view [board]
