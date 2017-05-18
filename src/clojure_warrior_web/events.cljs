@@ -1,8 +1,8 @@
 (ns clojure-warrior-web.events
   (:require
-    [re-frame.core :refer [reg-fx reg-event-db reg-event-fx dispatch]]
     [clojure.string :as string]
-    [fipp.clojure :as fipp]
+    [re-frame.core :refer [reg-fx reg-event-db reg-event-fx dispatch]]
+    [zprint.core :refer [zprint-str]]
     [clojure-warrior-web.eval :refer [eval-code]]
     [clojure-warrior-web.url-store :as url-store]
     [clojure-warrior.levels :as levels]
@@ -43,13 +43,22 @@
             (dispatch [:console-error error])
             (js/console.error (str error))))))))
 
+(defn format-code [code]
+  (zprint-str code 50 {:style :community
+                       :parse-string-all? true
+                       :parse {:interpose "\n\n"}
+                       :fn-map {"defn" :fn}
+                       :map {:comma? false
+                             :force-nl? true}}))
+
 (def sample-code
   (->> ['(defn warrior-code [state]
            (say (:health (warrior state)))
            [:walk :forward])
         '(enter-the-tower! warrior-code)]
-       (map #(with-out-str (fipp/pprint %1 {:width 40})))
-       (string/join "\n")))
+       (map pr-str)
+       (string/join "\n")
+       format-code))
 
 (reg-event-fx
   :initialize

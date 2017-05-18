@@ -6,11 +6,7 @@
                  [re-frame "0.8.0"]
                  [garden "1.3.2"]
                  [clojure-warrior "0.0.1"]
-                 [zprint "0.3.2"]
-                 ; rrb-vector is broken in latest cljs
-                 ; exclude it from fipp and include an alternative
-                 [fipp "0.6.6" :exclusions [org.clojure/core.rrb-vector]]
-                 [quantum/org.clojure.core.rrb-vector "0.0.12"]]
+                 [zprint "0.3.2"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [lein-cljsbuild "1.1.4"]]
