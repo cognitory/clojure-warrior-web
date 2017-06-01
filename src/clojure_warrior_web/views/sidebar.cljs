@@ -13,6 +13,17 @@
    '[:shoot :forward]    ; Shoot your bow & arrow in a given direction
    ""
 
+   (symbol "; sample location state")
+   ""
+
+   '{:type :enemy
+     :health 20 
+     :enemy? true 
+     :melee? true 
+     :ranged? true
+     :direction :west}
+
+   ""
    (symbol "; helper functions")
    ""
    ; return the warrior
