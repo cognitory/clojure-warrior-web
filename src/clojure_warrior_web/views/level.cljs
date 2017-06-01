@@ -24,7 +24,12 @@
     (:at-stairs entity)
     (assoc entity :state :walk-stairs)
 
-    (contains? #{:walk :attack :shoot :rest} (first (:action entity)))
+    (:rescued? entity)
+    (assoc entity :state :free
+                  :type :captive)
+
+    (contains? #{:walk :attack :shoot :rest :rescue} 
+               (first (:action entity)))
     (assoc entity :state (first (:action entity)))
 
     (contains? #{:warrior :sludge :thick-sludge :archer :wizard :captive}
