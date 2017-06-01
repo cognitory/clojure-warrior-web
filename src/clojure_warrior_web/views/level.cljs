@@ -1,9 +1,9 @@
 (ns clojure-warrior-web.views.level
   (:require
     [clojure.string :as string]
-    [zprint.core :refer [zprint-str]]
     [reagent.core :as r]
-    [re-frame.core :refer [subscribe dispatch]]))
+    [re-frame.core :refer [subscribe dispatch]]
+    [clojure-warrior-web.views.code :refer [code-view]]))
 
 (defn health-bar-view [entity]
   (when (entity :max-health)
@@ -65,18 +65,6 @@
        [:button {:disabled (when (= @turn (dec @turn-count)) "disabled")
                  :on-click (fn []
                              (dispatch [:set-turn (inc @turn)]))} ">"]])))
-
-(defn code-view [code]
-  [:div {:class (string/join " "  ["CodeMirror" "cm-s-default" "cm-s-railscasts"])
-         :ref (fn [el]
-                (when (not (nil? el))
-                  (js/CodeMirror.runMode
-                    (zprint-str code 25 {:style :community
-                                         :parse-string? true
-                                         :map {:comma? false
-                                               :force-nl? true}})
-                    "clojure"
-                    el)))}])
 
 (defn message-view [message]
   (if (string/starts-with? message ">")

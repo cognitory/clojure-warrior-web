@@ -2,11 +2,6 @@
   (:require
     [garden.core :refer [css]]))
 
-(defn code-area []
-  {:padding "1em"
-   :height "100vh"
-   :box-sizing "border-box"})
-
 (defn editor-styles []
   [:.editor
    {:min-width "20em"
@@ -43,15 +38,26 @@
       {:background "#da4939"}]]]
 
    [:.CodeMirror
-    (code-area)
-    {:background "black"}]])
+    {:padding "1em"
+     :height "100vh"
+     :box-sizing "border-box"
+     :white-space "pre"
+     :background "black"}]])
 
 (defn sidebar-styles []
   [:.sidebar
-   {:overflow "hidden"}
+   {:overflow "hidden"
+    :height "100vh"
+    :background "#2b2b2b" }
 
    [:.CodeMirror
-    (code-area)]])
+    {:white-space "pre"
+     :padding "1em"
+     :height "initial"
+     :display "inline-block"}
+
+    [:.cm-builtin
+     {:color "#da4939"}]]])
 
 (defn level-styles []
   [:.level
