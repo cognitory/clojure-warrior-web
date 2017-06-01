@@ -27,7 +27,7 @@
     (contains? #{:walk :attack :shoot :rest} (first (:action entity)))
     (assoc entity :state (first (:action entity)))
 
-    (contains? #{:warrior :sludge :thick-sludge :archer :wizard}
+    (contains? #{:warrior :sludge :thick-sludge :archer :wizard :captive}
                (:type entity))
     (assoc entity :state :base)
 
