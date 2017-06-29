@@ -43,7 +43,10 @@
   (let [entity (annotate-entity entity)]
     [:div.sprite
      {:class (str (name (:type entity)) " "
-                  (name (or (:state entity) :nil)))
+                  (name (or (:state entity) :nil)) " "
+                  (when (:enemy? entity) "enemy") " "
+                  (when (:direction entity)
+                    (name (:direction entity))))
       :style {:background-image
               (str "url(./sprites/"
                    (name (:type entity))

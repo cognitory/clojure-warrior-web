@@ -128,6 +128,12 @@
       [:&.attack.sludge
        {:left "0px"}]
 
+      [:&.warrior.west
+       {:transform "scale(-1, 1)"}]
+
+      [:&.enemy.east
+       {:transform "scale(-1, 1)"}]
+
       [:&.attack.warrior::after
        {:content "\"\""
         :display "block"
