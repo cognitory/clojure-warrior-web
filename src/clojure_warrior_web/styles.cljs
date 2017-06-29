@@ -104,7 +104,8 @@
    [:.board
     {:height "64px"
      :width "100%"
-     :overflow "hidden"
+     :overflow-y "hidden"
+     :overflow-x "auto"
      :white-space "nowrap"}
 
     [:.space
