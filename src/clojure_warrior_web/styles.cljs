@@ -54,7 +54,7 @@
     {:white-space "pre"
      :padding "1em"
      :height "initial"
-     :display "inline-block"}
+     :display "block"}
 
     [:.cm-builtin
      {:color "#da4939"}]]])
